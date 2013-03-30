@@ -21,10 +21,21 @@ class Route < ActiveRecord::Base
 
   def to_tweet
     hashtagged_types = types.map { |type| hashtag(type) }.join(', ')
-    "#{name} #{grade} (#{hashtagged_types}) set by #{set_by} at #{gym} #{hashtag(location)} #{url}"
+    middle = " #{grade} (#{hashtagged_types}) set by #{set_by} at #{gym} #{hashtag(location)} "
+
+    tweetable_name = truncate(name, 140 - (middle.length + 20))
+
+    "#{tweetable_name}#{middle}#{url}"
   end
 
   private
+
+  def truncate(str, length)
+    return str if str.length <= length
+
+    suffix = '...'
+    str[0, length - suffix.length] + suffix
+  end
 
   def hashtag(str)
     "##{str.to_s.sub(/\s/, '')}"
