@@ -106,40 +106,4 @@ class RouteTest < ActiveSupport::TestCase
 
     assert !@valid_route.save
   end
-
-  test "can format itself as a tweet" do
-    tweet = @valid_route.to_tweet
-
-    expected = "The Climb 5.10a (#lead, #toprope) set by Bob at Earth Treks #Rockville http://route.com/1234"
-
-    assert_equal expected, tweet
-  end
-
-  test "removes spaces from hashtags in tweet" do
-    @valid_route.location = 'The City'
-    tweet = @valid_route.to_tweet
-
-    expected = "The Climb 5.10a (#lead, #toprope) set by Bob at Earth Treks #TheCity http://route.com/1234"
-
-    assert_equal expected, tweet
-  end
-
-  test "abbreviates name if tweet is too long" do
-    # name is too long for a tweet
-    @valid_route.name = 'a' * 150
-
-    tweet = @valid_route.to_tweet
-
-    # 62 chars
-    middle = " 5.10a (#lead, #toprope) set by Bob at Earth Treks #Rockville "
-    # counts as 20 chars
-    url = "http://route.com/1234"
-
-    name = "a" * (140 - (62 + 20 + 3))
-    name << '...'
-
-    expected = "#{name}#{middle}#{url}"
-
-    assert_equal expected, tweet
-  end
 end
