@@ -4,6 +4,8 @@ class Route < ActiveRecord::Base
 
   attr_accessible :grade, :gym, :location, :name, :rid, :set_by, :url
 
+  validates_presence_of :name, :grade, :gym, :location, :rid, :set_by, :url
+
   # Routes created in the last week, newest first.
   scope :latest, where('created_at > ?', 7.days.ago).order('created_at DESC')
 
