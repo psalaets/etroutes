@@ -33,4 +33,20 @@ class RouteTest < ActiveSupport::TestCase
 
     assert_equal([:lead, :toprope], r.types)
   end
+
+  test "Route.latest is last week's worth of Routes, newest first" do
+    routes = []
+    3.times do |i|
+      r = Route.create
+      r.created_at = (i * 5).days.ago
+      r.save
+      routes << r
+    end
+
+    young, older, too_old = routes
+
+    latest = Route.latest
+
+    assert_equal([young, older], latest)
+  end
 end

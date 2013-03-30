@@ -4,6 +4,9 @@ class Route < ActiveRecord::Base
 
   attr_accessible :grade, :gym, :location, :name, :rid, :set_by, :url
 
+  # Routes created in the last week, newest first.
+  scope :latest, where('created_at > ?', 7.days.ago).order('created_at DESC')
+
   def types=(new_types)
     comma_delimited = (TYPES & new_types).join(',')
     write_attribute(:types, comma_delimited)
