@@ -11,10 +11,13 @@ class RouteTest < ActiveSupport::TestCase
       :set_by   => 'Bob',
       :url      => 'http://route.com/1234'
     )
+    @valid_route.types = [:lead, :toprope]
   end
 
   test "types starts out empty" do
-    assert_equal([], @valid_route.types)
+    r = Route.new
+
+    assert_equal([], r.types)
   end
 
   test "types is a collection of Symbols" do
@@ -102,5 +105,22 @@ class RouteTest < ActiveSupport::TestCase
     @valid_route.url = nil
 
     assert !@valid_route.save
+  end
+
+  test "can format itself as a tweet" do
+    tweet = @valid_route.to_tweet
+
+    expected = "The Climb 5.10a (#lead, #toprope) set by Bob at Earth Treks #Rockville http://route.com/1234"
+
+    assert_equal expected, tweet
+  end
+
+  test "removes spaces hashtags in tweet" do
+    @valid_route.location = 'The City'
+    tweet = @valid_route.to_tweet
+
+    expected = "The Climb 5.10a (#lead, #toprope) set by Bob at Earth Treks #TheCity http://route.com/1234"
+
+    assert_equal expected, tweet
   end
 end
