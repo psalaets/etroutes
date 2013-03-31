@@ -1,5 +1,8 @@
 require 'sendspot_scraper'
 
+# Pull in Rails app.
+require File.expand_path('../config/environment', File.dirname(__FILE__))
+
 # These are the ids used by sendspot for the various ET locations.
 locations_by_id = {
   1 => :columbia,
@@ -12,13 +15,21 @@ locations_by_id.each do |id, location|
 
   scraper = SendspotScraper::Scraper.new(client)
   scraper.route_exists_hook = lambda do |rid|
-    puts "doing route exists check for rid: #{rid}"
-    false
+    Route.find_by_rid(rid)
   end
 
-  scraper.new_route_hook = lambda do |route|
-    puts "New route: |#{route.name}| |#{route.grade}| at #{route.location}"
+  scraper.new_route_hook = lambda do |scraped|
+    r = Route.new
+    r.rid       = scraped.id
+    r.url       = scraped.url
+    r.name      = scraped.name
+    r.grade     = scraped.grade
+    r.types     = scraped.types
+    r.gym       = scraped.gym
+    r.location  = scraped.location
+    r.set_by    = scraped.set_by
+    r.save
   end
 
-  scraper.scrape
+  scraper.scrape(3)
 end
