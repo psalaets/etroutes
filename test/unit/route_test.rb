@@ -53,7 +53,7 @@ class RouteTest < ActiveSupport::TestCase
         :set_by   => 'Bob',
         :url      => 'http://route.com/1234'
       )
-      r.created_at = (i * 5).days.ago
+      r.created_at = (i * 7).days.ago
       r.save
       routes << r
     end
@@ -77,7 +77,7 @@ class RouteTest < ActiveSupport::TestCase
         :set_by   => 'Bob',
         :url      => 'http://route.com/1234'
       )
-      r.created_at = (i * 5).days.ago
+      r.created_at = (i * 7).days.ago
       r.save
       routes << r
     end

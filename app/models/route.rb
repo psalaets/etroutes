@@ -11,7 +11,7 @@ class Route < ActiveRecord::Base
   end
 
   # Routes created in the last week, newest first.
-  scope :latest, where('created_at > ?', 7.days.ago).order('created_at DESC')
+  scope :latest, where('created_at >= ?', 7.days.ago).order('created_at DESC')
 
   # Routes that are more than than a week old.
   scope :old, where('created_at < ?', 7.days.ago)
