@@ -5,12 +5,14 @@ require File.expand_path('../config/environment', File.dirname(__FILE__))
 
 # These are the ids used by sendspot for the various ET locations.
 locations_by_id = {
-  1 => :columbia,
-  2 => :timonium,
-  3 => :rockville
+  1 => 'Columbia',
+  2 => 'Timonium',
+  3 => 'Rockville'
 }
 
 locations_by_id.each do |id, location|
+  puts "Scanning for new routes in #{location}..."
+
   client = SendspotScraper::Client.new('earthtreks', id)
 
   scraper = SendspotScraper::Scraper.new(client)
@@ -19,6 +21,8 @@ locations_by_id.each do |id, location|
   end
 
   scraper.new_route_hook = lambda do |scraped|
+    puts "#{scraped.name} #{scraped.grade}"
+
     r = Route.new
     r.rid       = scraped.id
     r.url       = scraped.url
@@ -31,5 +35,5 @@ locations_by_id.each do |id, location|
     r.save
   end
 
-  scraper.scrape(3)
+  scraper.scrape
 end
