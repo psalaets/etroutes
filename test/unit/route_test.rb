@@ -65,6 +65,30 @@ class RouteTest < ActiveSupport::TestCase
     assert_equal([young, older], latest)
   end
 
+  test "Route.old are Routes older than 1 week" do
+    routes = []
+    3.times do |i|
+      r = Route.create(
+        :name     => "Climb #{i}",
+        :grade    => '5.8',
+        :gym      => 'Earth Treks',
+        :location => 'Rockville',
+        :rid      => '1234',
+        :set_by   => 'Bob',
+        :url      => 'http://route.com/1234'
+      )
+      r.created_at = (i * 5).days.ago
+      r.save
+      routes << r
+    end
+
+    young, older, too_old = routes
+
+    old_routes = Route.old
+
+    assert_equal([too_old], old_routes)
+  end
+
   test "name is required" do
     @valid_route.name = nil
 

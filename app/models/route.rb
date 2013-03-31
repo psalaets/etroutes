@@ -13,6 +13,9 @@ class Route < ActiveRecord::Base
   # Routes created in the last week, newest first.
   scope :latest, where('created_at > ?', 7.days.ago).order('created_at DESC')
 
+  # Routes that are more than than a week old.
+  scope :old, where('created_at < ?', 7.days.ago)
+
   def types=(new_types)
     comma_delimited = (TYPES & new_types).join(',')
     write_attribute(:types, comma_delimited)
