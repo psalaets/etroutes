@@ -35,5 +35,9 @@ locations_by_id.each do |id, location|
     r.save
   end
 
+  scraper.scrape_error_hook do |error|
+    puts "Scrape error: #{error}"
+  end
+
   scraper.scrape
 end
