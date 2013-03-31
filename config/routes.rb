@@ -1,4 +1,6 @@
 Etroutes::Application.routes.draw do
+  get "routes/latest" => "routes#latest"
+
   resources :routes
 
 
