@@ -6,6 +6,7 @@ gem 'rails', '3.2.12'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'sqlite3'
+gem 'mysql2'
 
 gem 'sendspot_scraper', :git => 'https://github.com/psalaets/sendspot_scraper'
 
