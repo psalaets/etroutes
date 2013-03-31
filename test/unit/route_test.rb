@@ -106,4 +106,12 @@ class RouteTest < ActiveSupport::TestCase
 
     assert !@valid_route.save
   end
+
+  test "guid is set automatically when route is created" do
+    assert !@valid_route.guid
+
+    @valid_route.save
+
+    assert @valid_route.guid
+  end
 end

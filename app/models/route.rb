@@ -6,6 +6,10 @@ class Route < ActiveRecord::Base
 
   validates_presence_of :grade, :gym, :location, :name, :rid, :set_by, :url
 
+  before_create do |route|
+    self.guid = SecureRandom.uuid
+  end
+
   # Routes created in the last week, newest first.
   scope :latest, where('created_at > ?', 7.days.ago).order('created_at DESC')
 
