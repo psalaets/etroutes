@@ -7,6 +7,7 @@ gem 'rails', '3.2.12'
 
 gem 'sqlite3'
 
+gem 'sendspot_scraper', :git => 'https://github.com/psalaets/sendspot_scraper'
 
 # Gems used only for assets and not required
 # in production environments by default.

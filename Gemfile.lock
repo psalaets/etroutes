@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/psalaets/sendspot_scraper
+  revision: 8ae46931c7b32330edc311e2e69798dbd17f9674
+  specs:
+    sendspot_scraper (0.0.1)
+      nokogiri (= 1.5.6)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -53,6 +60,7 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.21)
     multi_json (1.7.2)
+    nokogiri (1.5.6)
     polyglot (0.3.3)
     rack (1.4.5)
     rack-cache (1.2)
@@ -108,5 +116,6 @@ DEPENDENCIES
   jquery-rails
   rails (= 3.2.12)
   sass-rails (~> 3.2.3)
+  sendspot_scraper!
   sqlite3
   uglifier (>= 1.0.3)
