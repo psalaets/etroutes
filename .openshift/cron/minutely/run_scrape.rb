@@ -3,7 +3,7 @@
 ENV['RAILS_ENV'] ||= 'production'
 
 # Move into repo base to bundler can find Gemfile
-basedir = ENV['$OPENSHIFT_REPO_DIR']
+basedir = ENV['OPENSHIFT_REPO_DIR']
 
 # Every 10 minutes
 if Time.now.min.to_s[-1] == '0'
