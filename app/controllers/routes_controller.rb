@@ -7,6 +7,7 @@ class RoutesController < ApplicationController
     end
   end
 
+=begin
   # GET /routes
   # GET /routes.json
   def index
@@ -88,4 +89,6 @@ class RoutesController < ApplicationController
       format.json { head :no_content }
     end
   end
+=end
+
 end
