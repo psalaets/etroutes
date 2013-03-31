@@ -13,7 +13,7 @@ locations_by_id = {
 locations_by_id.each do |id, location|
   puts "Scanning for new routes in #{location}..."
 
-  client = SendspotScraper::Client.new('earthtreks', id)
+  client = SendspotScraper::Client.new(:gym => 'earthtreks', :location_id => id, :verbose => true)
 
   scraper = SendspotScraper::Scraper.new(client)
   scraper.route_exists_hook = lambda do |rid|
