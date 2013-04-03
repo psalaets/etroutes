@@ -3,9 +3,13 @@ atom_feed do |feed|
   feed.updated(@routes.first.created_at) if @routes.any?
 
   @routes.each do |route|
-    feed.entry(route, :id => route.guid, :url => route.url) do |entry|
+    feed.entry(route, :url => route.url) do |entry|
       entry.title('New Route')
       entry.content(RoutePresenter.new(route).to_tweet)
+      entry.author do |author|
+        author.name('blah')
+        author.email('donotuse@donotuse.blah')
+      end
     end
   end
 end
