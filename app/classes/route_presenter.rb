@@ -4,8 +4,7 @@ class RoutePresenter
   end
 
   def to_tweet
-    types = @route.types.map { |type| hashtag(type) }.join(', ')
-    middle = " #{@route.grade} (#{types}) set by #{@route.set_by} at #{@route.gym} #{hashtag(@route.location)} "
+    middle = " (#{@route.grade}) set by #{@route.set_by} at #{hashtag(@route.location)} "
 
     name = truncate(@route.name, 140 - (middle.length + 20), '...')
 

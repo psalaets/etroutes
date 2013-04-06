@@ -19,7 +19,7 @@ class RoutePresenterTest < ActiveSupport::TestCase
   test "can format route into a tweet" do
     tweet = @presenter.to_tweet
 
-    expected = "The Climb 5.10a (#lead, #toprope) set by Bob at Earth Treks #Rockville http://route.com/1234"
+    expected = "The Climb (5.10a) set by Bob at #Rockville http://route.com/1234"
 
     assert_equal expected, tweet
   end
@@ -28,7 +28,7 @@ class RoutePresenterTest < ActiveSupport::TestCase
     @route.location = 'The City'
     tweet = @presenter.to_tweet
 
-    expected = "The Climb 5.10a (#lead, #toprope) set by Bob at Earth Treks #TheCity http://route.com/1234"
+    expected = "The Climb (5.10a) set by Bob at #TheCity http://route.com/1234"
 
     assert_equal expected, tweet
   end
@@ -39,12 +39,11 @@ class RoutePresenterTest < ActiveSupport::TestCase
 
     tweet = @presenter.to_tweet
 
-    # 62 chars
-    middle = " 5.10a (#lead, #toprope) set by Bob at Earth Treks #Rockville "
+    middle = " (5.10a) set by Bob at #Rockville "
     # counts as 20 chars
     url = "http://route.com/1234"
 
-    name = "a" * (140 - (62 + 20 + 3))
+    name = "a" * (140 - (middle.length + 20 + 3))
     name << '...'
 
     expected = "#{name}#{middle}#{url}"
