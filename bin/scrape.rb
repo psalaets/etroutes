@@ -4,24 +4,24 @@ require 'sendspot_scraper'
 require File.expand_path('../config/environment', File.dirname(__FILE__))
 
 # These are the ids used by sendspot for the various ET locations.
-locations_by_id = {
-  1 => 'Columbia',
-  2 => 'Timonium',
-  3 => 'Rockville'
-}
+location_ids = [
+  1, # Columbia
+  2, # Timonium
+  3  # Rockville
+]
 
-locations_by_id.each do |id, location|
-  puts "Scanning for new routes in #{location}..."
+client = SendspotScraper::Client.new(location_ids)
 
-  client = SendspotScraper::Client.new(:gym => 'earthtreks', :location_id => id)
+puts "Scanning for new routes..."
 
-  scraper = SendspotScraper::Scraper.new(client)
-  scraper.route_exists_hook = lambda do |rid|
-    Route.find_by_rid(rid)
-  end
+scraper = SendspotScraper::Scraper.new(client)
+scraper.route_hook = lambda do |scraped|
+  puts "route_hook running... (#{scraped.name})"
 
-  scraper.new_route_hook = lambda do |scraped|
-    puts "#{scraped.name} #{scraped.grade}"
+  route = Route.find_by_rid(scraped.id)
+
+  if route.nil?
+    puts "New: #{scraped.name} #{scraped.grade} in #{scraped.location}"
 
     r = Route.new
     r.rid       = scraped.id
@@ -33,11 +33,15 @@ locations_by_id.each do |id, location|
     r.location  = scraped.location
     r.set_by    = scraped.set_by
     r.save
-  end
 
-  scraper.scrape_error_hook = lambda do |error|
-    puts "Scrape error: #{error}"
+    true
+  else
+    false
   end
-
-  scraper.scrape
 end
+
+scraper.scrape_error_hook = lambda do |error|
+  puts "Scrape error: #{error}"
+end
+
+scraper.scrape
