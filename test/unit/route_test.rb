@@ -65,6 +65,29 @@ class RouteTest < ActiveSupport::TestCase
     assert_equal([young, older], latest)
   end
 
+  test "Routes.latest are ordered by descending id when created at is the same" do
+    created_at = 1.days.ago
+
+    2.times do |i|
+      r = Route.create(
+        :name     => "Climb #{i}",
+        :grade    => '5.8',
+        :gym      => 'Earth Treks',
+        :location => 'Rockville',
+        :rid      => '1234',
+        :set_by   => 'Bob',
+        :url      => 'http://route.com/1234'
+      )
+      r.created_at = created_at
+      r.save
+    end
+
+    latest = Route.latest
+
+    assert_equal(latest.first.created_at, latest.last.created_at)
+    assert(latest.first.id > latest.last.id)
+  end
+
   test "Route.old are Routes older than 1 week" do
     routes = []
     3.times do |i|
