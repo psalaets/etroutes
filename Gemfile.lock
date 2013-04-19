@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/psalaets/sendspot_scraper
-  revision: 0c889d640b9aa09c73d3bff05f558e1b4a33bf66
-  tag: v0.0.2
+  revision: b53ebb2645a2494b2cbe3c8b8668057efc2bddde
+  tag: v0.0.3
   specs:
-    sendspot_scraper (0.0.1)
+    sendspot_scraper (0.0.3)
       nokogiri (= 1.5.6)
 
 GEM
