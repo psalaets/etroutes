@@ -118,6 +118,7 @@ DEPENDENCIES
   jquery-rails
   mysql2
   rails (= 3.2.12)
+  rake (~> 10.0.4)
   sass-rails (~> 3.2.3)
   sendspot_scraper!
   sqlite3
